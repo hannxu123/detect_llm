@@ -22,7 +22,7 @@ ELI5
 ### *Part 1. IMDb Movie & Amazon Product Reviews* 
 
 Download the [IMDb Movie Dataset ](https://github.com/sahildit/IMDB-Movies-Extensive-Dataset-Analysis/blob/master/data1/IMDb%20movies.csv), to find movie infomration. 
-Use ChatGPT to generate reviews given the movie names. For example, you can try “Write a negative review about the movie \<MovieName\>. It is directed by \<DirectorName\>. It talks about "\<Description\>". Just give me the review text.” Collect 500 positive reviews and negative reviews and each review is for 1 movie. Human written reviews can be collected from https://huggingface.co/datasets/imdb. **Remember to use "max_tokens=300" to limit the length of each output to avoid high cost.**
+Use ChatGPT to generate reviews given the movie names. For example, you can try “Write a negative review about the movie "\<MovieName\>", which is directed by \<DirectorName\>. It talks about "\<Description\>". Just give me the review text.” Collect 500 positive reviews and negative reviews and each review is for 1 movie. Human written reviews can be collected from https://huggingface.co/datasets/imdb. **Remember to use "max_tokens=300" to limit the length of each output to avoid high cost.**
 
 ```python
 def run_gpt(prompt):
