@@ -19,7 +19,7 @@ HC3
 alpaca-gpt4
 ELI5
 
-### *Part 1 IMDb Movie & Amazon Product Reviews*. 
+### *Part 1. IMDb Movie & Amazon Product Reviews* 
 
 Download the title.akas.tsv.gz from https://developer.imdb.com/non-commercial-datasets/, to find movie names. 
 Use ChatGPT to generate reviews given the movie names. For example, input “Write a negative review about the movie \<MovieName\>”. You can try “Write a negative review about the movie \<MovieName\>. Just give me the review text.”
