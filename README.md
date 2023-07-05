@@ -22,7 +22,7 @@ ELI5
 ### *Part 1. IMDb Movie & Amazon Product Reviews* 
 
 Download the title.akas.tsv.gz from https://developer.imdb.com/non-commercial-datasets/, to find movie names. 
-Use ChatGPT to generate reviews given the movie names. For example, input “Write a negative review about the movie \<MovieName\>”. You can try “Write a negative review about the movie \<MovieName\>, directed by \<DirectorName\>. It is about \<Description\> Just give me the review text.”
+Use ChatGPT to generate reviews given the movie names. For example, input “Write a negative review about the movie \<MovieName\>”. You can try “Write a negative review about the movie \<MovieName\>. It is directed by \<DirectorName\>. It talks about "\<Description\>". Just give me the review text.”
 Collect 500 positive reviews and negative reviews and each review is for 1 movie. 
 Human written reviews can be collected from https://huggingface.co/datasets/imdb. **Remember to use "max_tokens=300" to limit the length of each output to avoid high cost.**
 
