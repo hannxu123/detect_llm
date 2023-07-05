@@ -19,8 +19,9 @@ HC3
 alpaca-gpt4
 ELI5
 
-*IMDb Movie Reviews*. https://developer.imdb.com/non-commercial-datasets/ 
-Download the title.akas.tsv.gz, to find movie names. 
+### *Part 1 IMDb Movie & Amazon Product Reviews*. 
+
+Download the title.akas.tsv.gz from https://developer.imdb.com/non-commercial-datasets/, to find movie names. 
 Use ChatGPT to generate reviews given the movie names. For example, input “Write a negative review about the movie <MovieName>”. You can try “Write a negative review about the movie <MovieName>. Just give me the review text.”
 Collect 500 positive reviews and negative reviews and each review is for 1 movie. 
 Human written reviews can be collected from https://huggingface.co/datasets/imdb. **Remember to use "max_tokens=300" to limit the length of each output to avoid high cost.**
@@ -44,3 +45,4 @@ This requires to make a jsonl file. To easily write a jsonl file, you can follow
 ```
 python api_request_parallel_processor.py --requests_filepath data.jsonl --request_url https://api.openai.com/v1/chat/completions
 ```
+Use the similar strategy to for Amazon product review. https://nijianmo.github.io/amazon/index.html 
