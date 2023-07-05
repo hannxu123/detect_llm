@@ -29,7 +29,7 @@ ELI5
 Download the title.akas.tsv.gz, to find movie names. 
 Use ChatGPT to generate reviews given the movie names. For example, input “Write a negative review about the movie <MovieName>”. You can try “Write a negative review about the movie <MovieName>. Just give me the review text.”
 Collect 500 positive reviews and negative reviews and each review is for 1 movie. 
-Human written reviews can be collected from https://huggingface.co/datasets/imdb 
+Human written reviews can be collected from https://huggingface.co/datasets/imdb. **Remember to use "max_tokens" to limit the length of each output to avoid high cost.**
 ​
 ```python
 def run_gpt(prompt):
@@ -44,7 +44,7 @@ def run_gpt(prompt):
     return message.strip()
 ```
 
-You can make API requests one by one. However, to make it faster, you can try the api_request_parallel_processor.py file to make the requests at scale. But you need to follow the instructions in the api_request_parallel_processor.py file. 
+You can make API requests one by one. However, to make it faster, you can try the api_request_parallel_processor.py file to make the requests at scale. But you need to follow the instructions in the api_request_parallel_processor.py file. **Remember to use "max_tokens" to limit the length of each output to avoid high cost.**
 
 This requires to make a jsonl file. To easily write a jsonl file, you can follow the example in example.py. Then you can query the api_request_parallel_processor.py:
 ```
