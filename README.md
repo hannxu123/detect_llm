@@ -29,7 +29,7 @@ ELI5
 Download the title.akas.tsv.gz, to find movie names. 
 Use ChatGPT to generate reviews given the movie names. For example, input “Write a negative review about the movie <MovieName>”. You can try “Write a negative review about the movie <MovieName>. Just give me the review text.”
 Collect 500 positive reviews and negative reviews and each review is for 1 movie. 
-Human written reviews can be collected from https://huggingface.co/datasets/imdb. **Remember to use "max_tokens" to limit the length of each output to avoid high cost.**
+Human written reviews can be collected from https://huggingface.co/datasets/imdb. **Remember to use "max_tokens=300" to limit the length of each output to avoid high cost.**
 ​
 ```python
 def run_gpt(prompt):
