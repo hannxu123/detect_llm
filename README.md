@@ -46,4 +46,7 @@ def run_gpt(prompt):
 
 You can make API requests one by one. Then, you can try the api_request_parallel_processor.py file to make the requests at scale. But you need to follow the instructions in the api_request_parallel_processor.py file. 
 
-This requires to make a jsonl file. To easily write a jsonl file, you can follow the example in example.py
+This requires to make a jsonl file. To easily write a jsonl file, you can follow the example in example.py. Then you can query the api_request_parallel_processor.py:
+```
+python api_request_parallel_processor.py --requests_filepath data.jsonl --request_url https://api.openai.com/v1/chat/completions
+```
