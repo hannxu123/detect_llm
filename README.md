@@ -15,7 +15,7 @@ Creative writing: Literature essay / story composing:
 GRE / SAT Essay
 HS standardized testing essays are difficult to find; not released by the organizations
 Datasets
-ivypanda essays
+ivypanda essays, [dataset link](https://huggingface.co/datasets/qwedsacf/ivypanda-essays/viewer/qwedsacf--ivypanda-essays/train?row=32))
 ASAP dataset (only 8 prompts)
 
 4. Question Answer: 
