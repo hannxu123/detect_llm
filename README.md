@@ -2,14 +2,11 @@
 
 Our design to build new LLM-generated datasets. It includes 4 major tasks and each task has 3 topics. Each topics have 2,000 ChatGPT and 2,000 human. 
 
-1. Society / Politics / Sports / Entertainment News generation:
-Base (human-written) dataset: Xsum, a dataset contains human-written news articles accompanied with a one-sentence summary.
-using the prompt = "Write an article following summary: Si".
+1. Sports / Entertainment News generation.
 
-2. Product (Amazon) / Movie (IMDb) / Scientific Paper (XXX) review:
+2. Product (Amazon) / Movie (IMDb).
 
-3. Use ChatGPT to create stories 
-GRE / SAT Essay, HS standardized testing essays are difficult to find; not released by the organizations, Datasets\\
+3. Use ChatGPT to create stories.
 ivypanda essays, [dataset link](https://huggingface.co/datasets/qwedsacf/ivypanda-essays/)) ASAP dataset (only 8 prompts)
 
 4. Question Answer: 
