@@ -24,6 +24,8 @@ ELI5
 Download the [IMDb Movie Dataset ](https://github.com/sahildit/IMDB-Movies-Extensive-Dataset-Analysis/blob/master/data1/IMDb%20movies.csv), to find movie infomration. 
 Use ChatGPT to generate reviews given the movie names. For example, you can try “Write a negative review about the movie "\<MovieName\>", which is directed by \<DirectorName\>. It talks about "\<Description\>". Just give me the review text.” Collect 500 positive reviews and negative reviews and each review is for 1 movie. Human written reviews can be collected from https://huggingface.co/datasets/imdb. **Remember to use "max_tokens=300" to limit the length of each output to avoid high cost.**
 
+Awesome ChatGPT Prompts: https://github.com/f/awesome-chatgpt-prompts  
+
 ```python
 def run_gpt(prompt):
     completions = openai.ChatCompletion.create(
