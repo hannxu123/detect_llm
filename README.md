@@ -2,14 +2,11 @@
 
 Our design to build new LLM-generated datasets. It includes 4 major tasks and each task has 3 topics. Each topics have 2,000 ChatGPT and 2,000 human. 
 
-1. Sports / Entertainment News generation.
+1. Product (Amazon) / Movie (IMDb).
 
-2. Product (Amazon) / Movie (IMDb).
+2. Creative writing: ivypanda essays, [dataset link](https://huggingface.co/datasets/qwedsacf/ivypanda-essays/)) ASAP dataset (only 8 prompts)
 
-3. Use ChatGPT to create stories.
-ivypanda essays, [dataset link](https://huggingface.co/datasets/qwedsacf/ivypanda-essays/)) ASAP dataset (only 8 prompts)
-
-4. Question Answer: 
+3. Question Answer: 
 Science, medical, finance, XXX	
 Datasets
 HC3
