@@ -1,6 +1,6 @@
 # Detect LLM generated texts
 
-Our design to build new LLM-generated datasets. It includes 4 major tasks and each task has 3 topics. Each topics have 2,000 ChatGPT and 2,000 human. 
+Our design to build new LLM-generated datasets. It includes 4 major tasks and each task has 3 topics. Each topics have 2,000 ChatGPT and 2,000 human. (1 Naive version, 1 human-imitation version?)
 
 1. News generation. 
 
