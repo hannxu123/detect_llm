@@ -1,28 +1,25 @@
 # Detect LLM generated texts
 
-Our design to build new LLM-generated datasets. It includes 4 major tasks and each task has 3 topics. Each topics have 2,000 ChatGPT and 2,000 human. 
+Our design to build new LLM-generated datasets. It includes 4 major tasks and each task has 3 topics. Each topics have 2,000 ChatGPT and 2,000 human. (1 Naive version, 1 human-imitation version?)
 
-1. Society / Politics / Sports / Entertainment News generation:
-Base (human-written) dataset: Xsum, a dataset contains human-written news articles accompanied with a one-sentence summary.
-using the prompt = "Write an article following summary: Si".
+1. News generation. 
 
-2. Product (Amazon) / Movie (IMDb) / Scientific Paper (XXX) review:
+2. Product (Amazon) / Movie (IMDb) Review.
 
-3. Use ChatGPT to create stories 
-GRE / SAT Essay, HS standardized testing essays are difficult to find; not released by the organizations, Datasets\\
-ivypanda essays, [dataset link](https://huggingface.co/datasets/qwedsacf/ivypanda-essays/)) ASAP dataset (only 8 prompts)
+3. Creative writing: ivypanda essays, [dataset link](https://huggingface.co/datasets/qwedsacf/ivypanda-essays/)) ASAP dataset (only 8 prompts)
 
-4. Question Answer: 
-Science, medical, finance, XXX	
-Datasets
-HC3
-alpaca-gpt4
-ELI5
+4. Question Answer from HC-3. 
 
 ### *Part 1. IMDb Movie & Amazon Product Reviews* 
 
 Download the [IMDb Movie Dataset ](https://github.com/sahildit/IMDB-Movies-Extensive-Dataset-Analysis/blob/master/data1/IMDb%20movies.csv), to find movie infomration. 
 Use ChatGPT to generate reviews given the movie names. For example, you can try “Write a negative review about the movie "\<MovieName\>", which is directed by \<DirectorName\>. It talks about "\<Description\>". Just give me the review text.” Collect 500 positive reviews and negative reviews and each review is for 1 movie. Human written reviews can be collected from https://huggingface.co/datasets/imdb. **Remember to use "max_tokens=300" to limit the length of each output to avoid high cost.**
+
+Awesome ChatGPT Prompts: https://github.com/f/awesome-chatgpt-prompts  
+
+
+*Write some comment about the movie \<MovieName\> like in a conversation. Following the style of this review: "\<A Random Selected Review from IMDb Dataset\>"*
+
 
 ```python
 def run_gpt(prompt):
