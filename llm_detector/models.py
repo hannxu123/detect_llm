@@ -20,7 +20,6 @@ class model_collector:
         self.do_top_p = do_top_p
         self.top_p = top_p
 
-
     def load_base_model(self):
         try:
             self.mask_model.cpu()
@@ -30,14 +29,12 @@ class model_collector:
             self.base_model.to(self.device)
         print(f'BASE model has moved to GPU', flush=True)
 
-
     def load_mask_model(self):
         if self.openai_model is None:
             self.base_model.cpu()
 
         self.mask_model.to(self.device)
         print(f'MASK model has moved to GPU', flush=True) 
-
 
     def load_classification_model(self):
         if self.openai_model is None and self.base_model is not None:
@@ -55,14 +52,20 @@ class Roberta_Sentinel(nn.Module):
         # load based model
         self.roberta = transformers.RobertaModel.from_pretrained('roberta-base', cache_dir=self.cache_dir)
         # define custom layers
-        self.fc = sequential_layers = nn.Sequential(nn.Linear(768, 768), nn.GELU(), nn.Dropout(0.1), nn.Linear(768, 2))
+        self.fc_1 = nn.Linear(768, 768)
+        self.gelu = nn.GELU()
+        self.dropout = nn.Dropout(0.1)
+        self.fc_2 = nn.Linear(768, 2)
 
     def forward(self, input_ids=None, attention_mask=None):
         # extract outputs from the body
         outputs = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
         outputs = outputs[0]
         # add custom layers
-        outputs = self.fc(outputs[:,0,:].view(-1, 768))
+        outputs = self.fc_1(outputs[:,0,:].view(-1, 768))
+        outputs = self.gelu(outputs)
+        outputs = self.dropout(outputs)
+        outputs = self.fc_2(ouputs)
 
         return outputs
 
@@ -80,7 +83,10 @@ class SiameseNetwork(nn.Module):
         self.roberta = transformers.XLMRobertaModel.from_pretrained('xlm-roberta-base', cache_dir=self.cache_dir)
         self.cos_sim = nn.CosineSimilarity(dim=1)
         # add linear layers to compare between the features of the two images
-        self.fc = nn.Sequential(nn.Linear(768*2+1, 768), nn.GELU(), nn.Dropout(0.1), nn.Linear(768, 2))
+        self.fc_1 = nn.Linear(768*2+1, 768)
+        self.gelu = nn.GELU()
+        self.dropout = nn.Dropout(0.1)
+        self.fc_2 = nn.Linear(768, 2)
 
     def forward_once(self, input_ids=None, attention_mask=None):
         output = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
@@ -99,10 +105,12 @@ class SiameseNetwork(nn.Module):
         cos_output = torch.unsqueeze(cos_output, dim=-1)
 
         outputs = torch.cat((output1, output2, cos_output), 1)
-        outputs = self.fc(outputs)
-
+        outputs = self.fc_1(outputs[:,0,:].view(-1, 768))
+        outputs = self.gelu(outputs)
+        outputs = self.dropout(outputs)
+        outputs = self.fc_2(ouputs)
         # # pass the out of the linear layers to sigmoid layer
-        # output = self.sigmoid(output)
+        # outputs = self.sigmoid(outputs)
         
         return outputs
 
