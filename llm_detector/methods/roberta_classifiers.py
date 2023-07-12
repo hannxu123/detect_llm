@@ -261,7 +261,7 @@ class roberta_classifiers:
             scheduler.step()
 
         # load best checkpoint
-        para = torch.load(save_path, map_location='cpu')
+        para = torch.load(os.path.join(save_path, self.dataset_name + '_best_model.pt'), map_location='cpu')
         self.classification_model.load_state_dict(para['model_state_dict'], strict=False)
         self.classification_model.eval()
 
