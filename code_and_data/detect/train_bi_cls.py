@@ -18,7 +18,7 @@ def train(model, tokenizer, optimizer, device, loader):
     for i, dat in enumerate(loader):
         texts, labels = dat
         texts = list(texts)
-        texts = tokenizer(texts, return_tensors="pt", padding = 'max_length', max_lengh = 64, truncation=True).input_ids
+        texts = tokenizer(texts, return_tensors="pt", padding = 'max_length', max_length = 64, truncation=True).input_ids
         texts, labels = texts.to(device), labels.to(device)
         aa = model(texts, labels=labels)
         loss = aa['loss']
@@ -40,7 +40,7 @@ def evaluate(model, tokenizer, device, loader):
         for i, dat in enumerate(loader):
             texts, labels = dat
             texts = list(texts)
-            texts_encode = tokenizer(texts, return_tensors="pt", padding = 'max_length', max_lengh = 64, truncation=True).input_ids
+            texts_encode = tokenizer(texts, return_tensors="pt", padding = 'max_length', max_length = 64, truncation=True).input_ids
             texts_encode = texts_encode.to(device)
             aa = model(texts_encode)
             logits = aa['logits']
