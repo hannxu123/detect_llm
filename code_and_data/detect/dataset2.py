@@ -11,6 +11,21 @@ datasets.logging.set_verbosity_error()
 import os
 import random
 import torch
+import re
+
+def remove_last_sentence(paragraph):
+    # Split the paragraph into sentences
+    sentences = paragraph.split('. ')
+    # Check if the last sentence ends with '.', '?', or '!'
+    last_sentence = sentences[-1]
+    if last_sentence.endswith(('.', '?', '!')):
+        return paragraph  # Return the original paragraph if last sentence is not ended by '.', '?', or '!'
+    else:
+        if len(sentences) > 1:
+            sentences.pop()
+        # Join the remaining sentences
+        modified_paragraph = '. '.join(sentences) +'.'
+        return modified_paragraph
 
 def load_jsonl(file_path):
     data = []
@@ -21,7 +36,7 @@ def load_jsonl(file_path):
 
 def process_spaces(story):
     story = story[0].upper() + story[1:]
-    return story.replace(
+    story =  story.replace(
         ' ,', ',').replace(
         ' .', '.').replace(
         ' ?', '?').replace(
@@ -43,6 +58,8 @@ def process_spaces(story):
         '\\\'', '\'').replace(
         '\n ', '\n').replace(
         '<br />', '').strip()
+    story = remove_last_sentence(story)
+    return story
 
 def strip_newlines(text):
     return ' '.join(text.split())
@@ -51,40 +68,8 @@ def cut_data(data):
     data = [x.strip() for x in data]
     data = [strip_newlines(x) for x in data]
     data = [process_spaces(x) for x in data]
-    # long_data = [x for x in data if (len(x.split()) > 48)]
-    return data
-
-def Corpus_HC3():
-
-    dataset = load_dataset("Hello-SimpleAI/HC3", name='all', cache_dir='chat')
-    real_list = dataset['train']['human_answers']
-    fake_list = dataset['train']['chatgpt_answers']
-
-    real_data = []
-    for real in real_list:
-        for sentence in real:
-            real_data.append(sentence)
-
-    fake_data = []
-    for fake in fake_list:
-        for sentence in fake:
-            fake_data.append(sentence)
-
-    random.shuffle(real_data)
-    random.shuffle(fake_data)
-
-    real_data = cut_data(real_data)
-    fake_data = cut_data(fake_data)
-
-    real_train = real_data[0:len(real_data) - 300]
-    real_test = real_data[len(real_data) - 300:]
-
-    fake_train = fake_data[0:len(fake_data) - 300]
-    fake_test = fake_data[len(fake_data) - 300:]
-
-    return real_train, real_test, fake_train, fake_test
-
-
+    long_data = [x for x in data if (len(x.split()) > 32)]
+    return long_data
 
 def Corpus_imdb(prompt = 'p1'):
 
@@ -99,6 +84,7 @@ def Corpus_imdb(prompt = 'p1'):
         for message in jsonl_data:
             fake_data.append(message[1]['choices'][0]['message']['content'])
         fake_data = cut_data(fake_data)
+
         fake_train = fake_data[0:len(fake_data) - 400]
         fake_valid = fake_data[len(fake_data) - 400: len(fake_data) - 250]
         fake_test = fake_data[len(fake_data) - 250:]
@@ -159,9 +145,8 @@ class TextDataset(Dataset):
         return answer, label
 
 def loader(batch_size, name = 'HC3', prompt = 'all2', verbose = False):
-    if name == 'HC3':
-        real_train, real_test, real_valid, fake_train, fake_test, fake_valid  = Corpus_HC3()
-    elif name == 'imdb':
+
+    if name == 'imdb':
         real_train, real_test, real_valid, fake_train, fake_test, fake_valid = Corpus_imdb(prompt)
     else:
         raise ValueError
