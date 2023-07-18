@@ -34,6 +34,7 @@ def join(raw_fills, text):
         if '<extra_id_' in text[i]:
             try:
                 text[i] = raw_fills[0][n]
+                n = n+1
             except:
                 break
 
@@ -69,7 +70,7 @@ def run(data_dir='data',
 
         xx = texts.split()
 
-        random_idx = np.random.choice(range(1, len(xx) - 1), 10, replace=False)
+        random_idx = np.random.choice(range(1, len(xx) - 1), 4, replace=False)
         random_idx = np.sort(random_idx)
 
         for i in range(random_idx.shape[0]):
@@ -83,7 +84,7 @@ def run(data_dir='data',
         n_expected = count_masks(texts)
         stop_id = mask_tokenizer.encode(f"<extra_id_{(n_expected - 1)}>")[0]
         tokens = mask_tokenizer([texts], return_tensors="pt", padding=True).to(mask_model.device)
-        outputs = mask_model.generate(**tokens, max_length=300, do_sample=True, top_p=0.9,
+        outputs = mask_model.generate(**tokens, max_length=500, do_sample=True, top_k=40,
                                       num_return_sequences=1, eos_token_id=stop_id)
         raw_fills = mask_tokenizer.batch_decode(outputs, skip_special_tokens=False)
         final_sentence = join(raw_fills, texts)
