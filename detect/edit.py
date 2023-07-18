@@ -30,13 +30,11 @@ def join(raw_fills, text):
     raw_fills = (extract_fills(raw_fills))
     text = text.split(' ')
     n = 0
-    total_num = len(raw_fills[0])
     for i in range(len(text)):
         if '<extra_id_' in text[i]:
-            text[i] = raw_fills[0][n]
-            n = n + 1
-            if n == total_num:
-                text[i] = ' '
+            try:
+                text[i] = raw_fills[0][n]
+            except:
                 break
 
     text = " ".join(text)
@@ -51,7 +49,6 @@ def run(data_dir='data',
     generator_name = test_decode + '_' + base_model_name
 
     ## data loader
-    fake_dataset = [XXXXXXXX] ## Our ChatGPT texts
 
     ## load T5 model
     model_name = 't5-large'
@@ -63,49 +60,38 @@ def run(data_dir='data',
         all_para_texts = []
         n = 0
 
-        for j in range(len(fake_dataset)):
-            print('Now processing sample ' +str(j))
+        texts = 'Please note: nominations for Spring 2024 and Summer 2024 will be solicited later in the fall, ' \
+                'in order to allow more time for potential nominees to complete their comprehensive exams in late summer or early fall. ' \
+                'Students cannot be nominated for DCF until after they have passed the comprehensive exam.'
 
-            ## random sample extra_id
-            texts = fake_dataset[j]
-            all_fake_texts.append(texts)
+        print(texts)
+        print('......................')
 
-            xx = texts.split(' ')
-            random_idx = np.random.choice(200, 51, replace = False)
-            random_idx = np.sort(random_idx)
+        xx = texts.split()
 
-            for i in range(random_idx.shape[0]):
-                xx[random_idx[i]] =f"<extra_id_{(i)}>"
-            texts = " ".join(xx)
+        random_idx = np.random.choice(range(1, len(xx) - 1), 10, replace=False)
+        random_idx = np.sort(random_idx)
 
-            ## using T5 to edit
-            n_expected = count_masks(texts)
-            stop_id = mask_tokenizer.encode(f"<extra_id_{(n_expected - 1)}>")[0]
-            tokens = mask_tokenizer([texts], return_tensors="pt", padding=True).to(mask_model.device)
-            outputs = mask_model.generate(**tokens, max_length=300, do_sample=True, top_p=0.9,
-                                          num_return_sequences=1, eos_token_id=stop_id)
-            raw_fills = mask_tokenizer.batch_decode(outputs, skip_special_tokens=False)
-            final_sentence = join(raw_fills, texts)
+        for i in range(random_idx.shape[0]):
+            xx[random_idx[i]] = f"<extra_id_{(i)}>"
+        texts = " ".join(xx)
 
-            ## save
-            all_para_texts.append(final_sentence)
-            if j > 199:
-                break
+        print(texts)
+        print('......................')
 
-    ## save the data
-    data = all_para_texts
-    data = list(dict.fromkeys(data))
-    data = [x.strip() for x in data]
-    data = [strip_newlines(x) for x in data]
-    data = [process_spaces(x) for x in data]
-    dd = {'original': all_fake_texts, 'paraphrased': data}
+        ## using T5 to edit
+        n_expected = count_masks(texts)
+        stop_id = mask_tokenizer.encode(f"<extra_id_{(n_expected - 1)}>")[0]
+        tokens = mask_tokenizer([texts], return_tensors="pt", padding=True).to(mask_model.device)
+        outputs = mask_model.generate(**tokens, max_length=300, do_sample=True, top_p=0.9,
+                                      num_return_sequences=1, eos_token_id=stop_id)
+        raw_fills = mask_tokenizer.batch_decode(outputs, skip_special_tokens=False)
+        final_sentence = join(raw_fills, texts)
+        print(final_sentence)
 
-    with open('data/' + generator_name + '_edited', "wb") as fp1:  # Pickling
-        pickle.dump(dd, fp1)
-    print('Total ' + str(len(dd['edited'])), flush=True)
 
-    with open('data_save/' + generator_name + '_edited', "wb") as fp1:  # Pickling
-        pickle.dump(dd, fp1)
+
+
 
 
 
