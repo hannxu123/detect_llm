@@ -75,7 +75,7 @@ def run(data_dir='data',
 
         for i in range(random_idx.shape[0]):
             xx[random_idx[i]] = f"<extra_id_{(i)}>"
-        texts = " ".join(xx)
+        texts = " ".join(xx) + f" <extra_id_{(i+1)}>"
 
         print(texts)
         print('......................')
@@ -88,6 +88,7 @@ def run(data_dir='data',
                                       num_return_sequences=1, eos_token_id=stop_id)
         raw_fills = mask_tokenizer.batch_decode(outputs, skip_special_tokens=False)
         final_sentence = join(raw_fills, texts)
+        final_sentence = final_sentence.split('<extra_id')[0]
         print(final_sentence)
 
 
