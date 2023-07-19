@@ -1,6 +1,6 @@
-The details of our dataset. It includes 4 major tasks. 
+The details of our dataset. It includes 4 major tasks. And 9 sub-tasks in total.
 
-| Name         | World | Sports | Business | IMDb   | Amazon | Ivy     | Eli5  | Hist  | Sci   |
+|              | World | Sports | Business | IMDb   | Amazon | Ivy     | Eli5  | Hist  | Sci   |
 |--------------|-------|--------|----------|--------|--------|---------|-------|-------|-------|
 | Task         | news  | news   | news     | review | review | writing | qa    | qa    | qa    |
 | ChatGPT Vol. | 4500  | 4500   | 4500     | 4500   | 4500   | 4500    | 4500  | 4500  | 4500  |
