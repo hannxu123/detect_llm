@@ -12,7 +12,9 @@ Our design to build new LLM-generated datasets. It includes 4 major tasks and ea
 
 ### *Part 1. Useful links* 
 
-Our github link: https://www.overleaf.com/8822696486dnqvwmwfkfbn
+Our overleaf link: https://www.overleaf.com/8822696486dnqvwmwfkfbn
+
+News dataset is here: https://drive.google.com/file/d/1yidALJz2C7DBS_vwOpD1DT2TrxJFXQEt/view?usp=sharing 
 
 Download the [IMDb Movie Dataset ](https://github.com/sahildit/IMDB-Movies-Extensive-Dataset-Analysis/blob/master/data1/IMDb%20movies.csv), to find movie infomration. 
 
