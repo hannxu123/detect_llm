@@ -127,14 +127,46 @@ send_button.pack()
 
 
 
+questions = []
+all_labels  = []
+all_results = []
+
+####################################################################
+####################################################################
+####################################################################News
+test_loader = loader('ivy')
+for i in range(5):
+    _, text, label = next(iter(test_loader))
+    answer = text[0]
+    # question = question[0]
+    all_labels.append(label.item())
+    q = {
+        "text": " The article: \" " + answer + "\"",
+        "options": ["Human", "ChatGPT"],
+        "variables": []}
+    questions.append(q)
+
+
+####################################################################
+####################################################################
+####################################################################News
+test_loader = loader('world')
+for i in range(5):
+    _, text, label = next(iter(test_loader))
+    answer = text[0]
+    # question = question[0]
+    all_labels.append(label.item())
+    q = {
+        "text": " The news: \" " + answer + "\"",
+        "options": ["Human", "ChatGPT"],
+        "variables": []}
+    questions.append(q)
+
 ####################################################################
 ####################################################################
 ####################################################################QA
 test_loader = loader('eli5')
-questions = []
-all_labels  = []
-all_results = []
-for i in range(8):
+for i in range(5):
     question, text, label = next(iter(test_loader))
     answer = text[0]
     question = question[0]
@@ -145,15 +177,12 @@ for i in range(8):
         "variables": []}
     questions.append(q)
 
-
-
-
 ####################################################################
 ####################################################################
 ####################################################################IMDB
 
 test_loader = loader('imdb')
-for i in range(8):
+for i in range(5):
     question, text, label = next(iter(test_loader))
     answer = text[0]
     question = question[0]
@@ -169,7 +198,7 @@ for i in range(8):
 ####################################################################Amazon
 
 test_loader = loader('amazon')
-for i in range(8):
+for i in range(5):
     question, text, label = next(iter(test_loader))
     answer = text[0]
     question = question[0]

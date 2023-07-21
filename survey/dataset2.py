@@ -8,9 +8,6 @@ from datasets.utils.logging import disable_progress_bar
 disable_progress_bar()
 import datasets
 datasets.logging.set_verbosity_error()
-import os
-import random
-import torch
 import pandas as pd
 
 def load_jsonl(file_path):
@@ -144,6 +141,82 @@ def Corpus_amazon():
 
 
 
+def Corpus_world():
+    fake_test = []
+    all_labels = []
+    all_questions = []
+
+    label = 1000
+    file_path = 'data_save/world' + '_results.jsonl'
+    jsonl_data = load_jsonl(file_path)
+
+    n = 0
+    for message in jsonl_data:
+        try:
+            fake_test.append(message[1]['choices'][0]['message']['content'])
+            all_questions.append('q')
+            all_labels.append(label)
+            n = n + 1
+            if n > 199:
+                break
+        except:
+            continue
+
+    fake_test = cut_data(fake_test)
+
+    ## processing human data
+    with open('data_save/real_worldnews', "rb") as fp:  # Unpickling
+        real_test = pickle.load(fp)
+
+    real_test = [i[0] for i in real_test]
+    real_test = cut_data(real_test)
+    all_labels.extend([0] * len(real_test))
+    all_questions.extend(['q'] * len(real_test))
+    all_test = fake_test + real_test
+
+    return all_questions, all_test, all_labels
+
+
+
+
+def Corpus_ivy():
+    fake_test = []
+    all_labels = []
+    all_questions = []
+
+    label = 1000
+    file_path = 'data_save/ivy_results.jsonl'
+    jsonl_data = load_jsonl(file_path)
+
+    n = 0
+    for message in jsonl_data:
+        try:
+            fake_test.append(message[1]['choices'][0]['message']['content'])
+            all_questions.append('q')
+            all_labels.append(label)
+            n = n + 1
+            if n > 199:
+                break
+        except:
+            continue
+
+    fake_test = cut_data(fake_test)
+
+    ## processing human data
+    real_test = load_dataset("qwedsacf/ivypanda-essays")['train']
+    real_test = [real_test[i]['TEXT'] for i in range(len(real_test)) if i < 200]
+    real_test = cut_data(real_test)
+    all_labels.extend([0] * len(real_test))
+    all_questions.extend(['q'] * len(real_test))
+    all_test = fake_test + real_test
+
+    return all_questions, all_test, all_labels
+
+
+
+
+
+
 def Corpus_eli5():
     fake_test = []
     all_labels = []
@@ -194,12 +267,12 @@ def Corpus_eli5():
     real_test = []
     real_questions = []
     n = 0
-    data = load_dataset("eli5")['train_askh']
+    data = load_dataset("eli5")['train_eli5']
 
     for dat in data:
         dat_list = dat['answers']['text']
         for j in dat_list:
-            if len(j.split()) > 32:
+            if (len(j.split()) > 32) & ("URL" not in j):
                 real_test.append(j)
                 real_questions.append(dat['title'])
                 n = n + 1
@@ -207,11 +280,12 @@ def Corpus_eli5():
         if n > 600:
             break
 
+    real_test = cut_data(real_test)
+
     all_test = fake_test + real_test
     all_questions = all_questions + real_questions
     all_labels.extend([0] * len(real_test))
 
-    print(len(all_test), len(all_questions), len(all_labels))
     return all_questions, all_test, all_labels
 
 
@@ -299,6 +373,10 @@ def loader(name = 'imdb'):
         all_questions, all_test, all_labels = Corpus_imdb()
     elif name == 'eli5':
         all_questions, all_test, all_labels = Corpus_eli5()
+    elif name == 'world':
+        all_questions, all_test, all_labels = Corpus_world()
+    elif name == 'ivy':
+        all_questions, all_test, all_labels = Corpus_ivy()
     else:
         raise ValueError
 
