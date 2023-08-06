@@ -1,0 +1,14 @@
+in this folder:
+
+check.py -- checks the content/length of each dataset
+
+process_v4.py -- creates all_datav4.jsonl
+process_include.py -- creates all_data_include.jsonl
+process_exclude.py --creates all_data_exclude.jsonl
+
+survey1 -- generates survey for table 1
+survey3 -- generates survey for table 3
+
+all_datav4.jsonl
+all_data_include.jsonl
+all_data_exclude.jsonl
