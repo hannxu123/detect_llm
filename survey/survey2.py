@@ -4,7 +4,7 @@ from dataset2 import loader
 
 def chat_with_model(prompt):
     # Set up OpenAI API credentials
-    openai.api_key = "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"
+    openai.api_key = "sk-W0kcNhgjghjARAz2GWI8sdfshfjjhlbkFJ8jgO935Imc3nqer4Y"
 
     # Define the ChatGPT parameters
     model = "gpt-3.5-turbo"
